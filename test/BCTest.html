@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>index.html</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body>
+
+    <script>
+        var es = new EventSource('Broadcast.php');
+        es.onmessage=function (event) {
+          console.log(event);
+        var jdata= $.parseJSON(event.data);
+         $(document.body).append(jdata.ID+" "+jdata.Name+" "+jdata.Event+" receive time"+clock()+" send time"+jdata.time+"<br>");
+        };
+
+        function clock(){
+            var now = new Date();
+
+            var year = now.getFullYear();
+            var month = now.getMonth()+1;
+            var date =  now.getDate();
+            var hour = now.getHours(); // 時
+            var min = now.getMinutes(); // 分
+            var sec = now.getSeconds(); // 秒
+
+            // 数値が1桁の場合、頭に0を付けて2桁で表示する指定
+            if(hour < 10) { hour = "0" + hour; }
+            if(min < 10) { min = "0" + min; }
+
+            var watch1 = hour + ':' + min + ':' + sec;
+            console.log(watch1);
+            var watch2 = year + '年' + month +'月'+ date +'日';
+          return watch1+" "+watch2;
+          }
+    </script>
+</body>
+</html>

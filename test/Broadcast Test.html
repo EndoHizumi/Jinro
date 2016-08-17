@@ -1,0 +1,26 @@
+<DOCTYPE HTML>
+  <head>
+    <title>JinrouResponcerTest</title>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <h1>BroadcastTest</h1>
+      <div id="status"></div>
+    <script>
+      window.onload=function(){
+        function AutoRegistor(){
+            $.ajax({
+              type:'POST',
+              url:'JinrouResponcer.php',
+              data:'name=\"遠藤ヒズミ\"&category=\"mystic\"',
+               success: function(data){
+                 $("#status").append(data);
+               }
+            });
+        }
+        AutoRegistor();
+        //setInterval("AutoRegistor()",1000);
+      }
+    </script>
+  </body>
+  </html>
