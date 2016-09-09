@@ -1,0 +1,63 @@
+body {
+    background-image: url(back.png);
+    background-repeat: no-repeat;
+    background-color: black;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: left center;
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='transparent', endColorstr='#000000');
+    /*INNER ELEMENTS MUST NOT BREAK THIS ELEMENTS BOUNDARIES*/
+    /*Element must have a height (not auto)*/
+    /*All filters must be placed together*/
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr = 'transparent', endColorstr = '#000000')";
+    /*Element must have a height (not auto)*/
+    /*All filters must be placed together*/
+    background-image: -webkit-gradient(linear, center top, center bottom, from(transparent), to(#000000));
+    background-image: -webkit-linear-gradient(top, transparent, #000000);
+    background-image: linear-gradient(top, transparent, #000000);
+}
+
+.loginArea {
+    position: relative;
+    top: 50%;
+    margin-top: 250px;
+}
+
+.loginArea .loginForm {
+    position: relative;
+    top: 0;
+    bottom: 0;
+    margin: 0 auto;
+    width: 300px;
+    /* フォームの範囲がわかるようにする */
+    padding: 1em;
+    border: 1px solid #CCC;
+    border-radius: 1em;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.loginArea div {}
+
+.loginArea span {
+    display: inline-block;
+    width: 65px;
+    text-align: left;
+    color: whitesmoke;
+}
+
+.loginArea input {
+    width: 224 px;
+}
+
+.loginArea input:focus {
+    border-color: aqua;
+    box-sizing: border-box;
+}
+
+.button {
+    padding-top: 10px;
+}
+
+button {
+    width: 295px;
+}
