@@ -11,17 +11,6 @@ $(document).ready(function () {
             alert("名前もしくは合言葉が入力されていません");
             return;
         }
-        //        $.ajax({
-        //            type: 'POST',
-        //            url: 'example.php',
-        //            data: {
-        //                example: 'test'
-        //            }
-        //        }).fail(function () {
-        //            // エラー処理
-        //        }).done(function () {
-        //            // 成功処理
-        //        });
         $.ajax({
             type: "POST",
             url: "login.php",
