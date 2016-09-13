@@ -21,8 +21,7 @@ $(document).ready(function () {
             if (data.indexOf("welcome to") != -1) {
                 alert(data);
             } else {
-                alert("failed!!");
-                alert(data);
+                $(".ErrArea").html(data);
             }
         });
     }

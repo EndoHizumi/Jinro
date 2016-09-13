@@ -13,11 +13,14 @@
         <form action="Login.php" class="loginForm" method="POST">
             <div>
                 <span>名前：</span>
-                <input type="text" name="name" />
+                <input type="text" name="name" maxlength="256" />
             </div>
             <div>
                 <span>合言葉：</span>
-                <input type="password" name="pass" />
+                <input type="password" name="pass" maxlength="10" />
+            </div>
+            <div class="ErrArea">
+                <span></span>
             </div>
             <div class="button">
                 <button>入場</button>

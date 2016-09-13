@@ -46,7 +46,7 @@ body {
 }
 
 .loginArea input {
-    width: 224 px;
+    width: 224px;
 }
 
 .loginArea input:focus {
@@ -60,4 +60,10 @@ body {
 
 button {
     width: 295px;
+}
+
+.ErrArea {
+    color: red;
+    text-align: center;
+    padding-top: 10px;
 }
