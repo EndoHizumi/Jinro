@@ -1,0 +1,39 @@
+body {
+    background-color: #c32a2a;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    color: white;
+}
+
+.DisplayBar {
+    position: relative;
+    top: 0;
+    width: 100%;
+    height: 50px;
+}
+
+.DisplayBar> * {
+    display: inline-block;
+}
+
+.DisplayBar .RoomName {}
+
+.DisplayBar .RoomName span {}
+
+.DisplayBar .PlayerNum {
+    position: absolute;
+    right: 0px;
+}
+
+.DisplayBar .PlayerNum span {}
+
+.PlayersView {}
+
+.PlayersView #hoge {}
+
+.PlayersView #hoge.PlayersView span {}
+
+.StatusBar {}
+
+.StatusBar .button {}

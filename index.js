@@ -13,13 +13,13 @@ $(document).ready(function () {
         }
         $.ajax({
             type: "POST",
-            url: "login.php",
+            url: "Login.php",
             data: "name=" + name + "&pass=" + pass,
 
         }).done(function (data) {
             console.log(data);
-            if (data.indexOf("welcome to") != -1) {
-                alert(data);
+            if (data.indexOf("0000") != -1) {
+                window.location.href = "gameroom.html";
             } else {
                 $(".ErrArea").html(data);
             }
