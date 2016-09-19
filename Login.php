@@ -34,11 +34,11 @@ try {
 
  if($postpass==$pass["job"]&&!empty($postName)){
    try {
-  //   $stmt = $pdo -> prepare("INSERT INTO members (ID,Name,Event) VALUE (:id,:name,:event);");
-  //   $stmt -> bindValue(':id',$colom+1);
-  //   $stmt -> bindValue(':name',$_POST["name"]);
-  //  $stmt->bindValue(':event',"Enter");
-  //   $stmt -> execute();
+    $stmt = $pdo -> prepare("INSERT INTO members (ID,Name,Event) VALUE (:id,:name,:event);");
+    $stmt -> bindValue(':id',$colom+1);
+    $stmt -> bindValue(':name',$_POST["name"]);
+    $stmt->bindValue(':event',"Enter");
+    $stmt -> execute();
     echo "[0000] welcome to ".$_POST["name"];
    } catch (PDOException $e) {
      require_once("ExceptionMapping.php");
