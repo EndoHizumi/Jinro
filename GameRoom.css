@@ -48,9 +48,11 @@ body {
 .DisplayBar .PlayerNum span {}
 
 .PlayersView {
-    position: relative;
+    position: absolute;
     margin: 50px 5px;
     height: 70%;
+    width: 99%;
+    overflow: auto;
     border: solid 1px white;
 }
 
@@ -59,7 +61,7 @@ body {
     position: relative;
     width: 90px;
     height: 100px;
-    background-color: ;
+    display: inline-block;
 }
 
 .Player img {
