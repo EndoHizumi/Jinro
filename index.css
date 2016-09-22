@@ -5,22 +5,14 @@ body {
     background-size: cover;
     background-attachment: fixed;
     background-position: left center;
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='transparent', endColorstr='#000000');
-    /*INNER ELEMENTS MUST NOT BREAK THIS ELEMENTS BOUNDARIES*/
-    /*Element must have a height (not auto)*/
-    /*All filters must be placed together*/
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr = 'transparent', endColorstr = '#000000')";
-    /*Element must have a height (not auto)*/
-    /*All filters must be placed together*/
-    background-image: -webkit-gradient(linear, center top, center bottom, from(transparent), to(#000000));
-    background-image: -webkit-linear-gradient(top, transparent, #000000);
-    background-image: linear-gradient(top, transparent, #000000);
+    width: auto;
+    height: 700px;
 }
 
 .loginArea {
     position: relative;
     top: 50%;
-    margin-top: 250px;
+    margin: 0 auto;
 }
 
 .loginArea .loginForm {
