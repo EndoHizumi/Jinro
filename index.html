@@ -1,32 +1,34 @@
+<!DOCTYPE html>
 <html>
 
-<head>
-    <meta name="viewport" content="width=device-width" initial-scale="1">
-    <link rel="stylesheet" href="index.css" />
+    <head>
+        <meta name="viewport" content="width=device-width" initial-scale="1">
+        <link rel="stylesheet" href="index.css" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>人狼　ログイン</title>
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+        <script type="application/javascript" src="index.js"></script>
+    </head>
 
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-    <script type="application/javascript" src="index.js"></script>
-</head>
-
-<body>
-    <div class="loginArea">
-        <form action="Login.php" class="loginForm" method="POST">
-            <div>
-                <span>名前：</span>
-                <input type="text" name="name" maxlength="256" />
-            </div>
-            <div>
-                <span>合言葉：</span>
-                <input type="password" name="pass" maxlength="10" />
-            </div>
-            <div class="ErrArea">
-                <span></span>
-            </div>
-            <div class="button">
-                <button>入場</button>
-            </div>
-        </form>
-    </div>
-</body>
+    <body>
+        <div class="loginArea">
+            <form action="Login.php" class="loginForm" method="POST">
+                <div>
+                    <span>名前：</span>
+                    <input type="text" name="name" maxlength="256" />
+                </div>
+                <div>
+                    <span>合言葉：</span>
+                    <input type="password" name="pass" maxlength="10" />
+                </div>
+                <div class="ErrArea">
+                    <span></span>
+                </div>
+                <div class="button">
+                    <button>入場</button>
+                </div>
+            </form>
+        </div>
+    </body>
 
 </html>

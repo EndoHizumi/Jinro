@@ -1,7 +1,5 @@
 <?php
   require("Common.php");
-  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
 try {
   $stmt = $pdo -> prepare("SELECT ID,job,expel FROM `members` WHERE id=:value;");
   $stmt -> bindValue(':value',0);
