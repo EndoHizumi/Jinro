@@ -1,0 +1,21 @@
+version: "3"
+services:
+
+  jinro:
+    build: .
+    volumes: 
+      - ./app:/var/www/html
+    ports:
+      - 88:80
+
+  jinro_db:
+    image: mysql:5.6
+    ports:
+      - "3307:3306"
+    volumes:
+      # 初期データを投入するSQLが格納されているdir
+      - ./mysql_init:/docker-entrypoint-initdb.d
+      # 永続化するときにマウントするdir
+      - ./mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
