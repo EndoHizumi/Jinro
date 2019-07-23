@@ -4,7 +4,7 @@ try {
   $stmt = $pdo -> prepare("SELECT ID,job,expel FROM `members` WHERE id=:value;");
   $stmt -> bindValue(':value',0);
   $stmt -> execute();
-  if(empty($stmt)) throw new Exception("BreakRoomExceptio", 1);
+  if(empty($stmt)) throw new Exception("BreakRoomException", 1);
   $pass =$stmt -> fetch(PDO::FETCH_ASSOC);
 } catch (Exception $e) {
   echo("[9999]Error Break Room. please contact administar");
