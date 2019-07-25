@@ -16,13 +16,12 @@ try {
     echo "Game already started. Retry later.";
     return;
   }
+ $postName = filter_input(INPUT_POST,"name");
+ if($postpass==$pass["job"]&&!empty($postName)){
   $stmt = $pdo -> prepare("select count(id) from members");
   $stmt -> execute();
   $coloms =$stmt -> fetch(PDO::FETCH_ASSOC);
   $colom = $coloms["count(id)"]-1;
-  $postName = filter_input(INPUT_POST,"name");
-
- if($postpass==$pass["job"]&&!empty($postName)){
    try {
     $stmt = $pdo -> prepare("INSERT INTO members (ID,Name,Event) VALUE (:id,:name,:event);");
     $stmt -> bindValue(':id',$colom+1);
