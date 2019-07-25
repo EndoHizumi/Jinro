@@ -61,8 +61,8 @@ if(isset($_POST["category"])){
     global $pdo;
     $stmt = $pdo -> prepare("SELECT `Ready` FROM `members` WHERE Ready= 0 AND ID BETWEEN 1 AND 20");
     $stmt -> execute();
-    $gameOK = $stmt -> fetch(PDO::FETCH_ASSOC)
-    if(isset($gameOK["Ready"])===false){//Readyが0のカラムがない＝全員の準備が完了していると、判断する
+    $gameOK = $stmt -> fetch(PDO::FETCH_ASSOC);
+    if (isset($gameOK["Ready"])===false){//Readyが0のカラムがない＝全員の準備が完了していると、判断する
       $stmt = $pdo -> prepare("UPDATE members SET expel=-2,Event='Start'  WHERE Name='game'");
       $stmt -> execute();
       $stmt = $pdo -> prepare("select count(id) from members where ID BETWEEN 1 AND 10;");
