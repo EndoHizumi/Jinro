@@ -20,17 +20,16 @@ if(isset($_POST["category"])){
       $stmt = $pdo -> prepare("UPDATE members SET Guard=1,Event='Guard' WHERE Name=:name");
   }else if($_POST["category"]=="start"){//あとで見やすくする。
         start();
-        return 0;
   }else if($_POST["category"]=="restart"){
-        $stmt = $pdo -> prepare("UPDATE members SET Job=NULL,Ready= 0,vote= 0,expel= 0,Guard= 0,Event='Restart' WHERE ID BETWEEN 1 AND 20");
+        $stmt = $pdo -> prepare("UPDATE members SET Job=NULL,Ready= 0,vote= 0,expel= 0,Guard= 0,Event='Restart' WHERE ID != 0");
   }else if($_POST["category"]=="nextDay"){
-    $stmt = $pdo -> prepare("UPDATE members SET Guard= 0,vote= 0,Event='NextDay' WHERE ID BETWEEN 1 AND 20");
+    $stmt = $pdo -> prepare("UPDATE members SET Guard= 0,vote= 0,Event='NextDay' WHERE ID != 0");
   }else if($_POST["category"]=="quit"){
-    $stmt = $pdo -> prepare("UPDATE members SET Job=NULL,Ready= 0,vote= 0,expel= 0,Guard= 0,Event='quit' WHERE ID BETWEEN 1 AND 20");
+    $stmt = $pdo -> prepare("UPDATE members SET Job=NULL,Ready= 0,vote= 0,expel= 0,Guard= 0,Event='quit' WHERE ID != 0");
   }else if($_POST["category"]=="end"){
       $stmt = $pdo -> prepare("UPDATE members SET expel=0,Event='End'  WHERE ID = 0");
       $stmt -> execute();
-      $stmt = $pdo -> prepare("DELETE FROM members WHERE ID BETWEEN 1 AND 20");
+      $stmt = $pdo -> prepare("DELETE FROM members WHERE ID != 0");
       $stmt -> execute();
       $stmt = $pdo -> prepare("TRUNCATE activity_logs");
   }else{
@@ -51,7 +50,7 @@ if(isset($_POST["category"])){
 }
   function maxExpel(){
     global $pdo;
-    $stmt = $pdo -> prepare("select max(expel) from members WHERE ID BETWEEN 1 AND 20");
+    $stmt = $pdo -> prepare("select max(expel) from members WHERE ID != 0");
     $stmt -> execute();
     $result =$stmt -> fetch(PDO::FETCH_ASSOC);
     if(empty($result))$result["max(expel)"]=1;
@@ -60,13 +59,13 @@ if(isset($_POST["category"])){
 
   function start(){
     global $pdo;
-    $stmt = $pdo -> prepare("SELECT `Ready` FROM `members` WHERE Ready= 0 AND ID BETWEEN 1 AND 20");
+    $stmt = $pdo -> prepare("SELECT `Ready` FROM `members` WHERE Ready= 0 AND ID != 0");
     $stmt -> execute();
     $gameOK = $stmt -> fetch(PDO::FETCH_ASSOC);
     if (isset($gameOK["Ready"])===false){//Readyが0のカラムがない＝全員の準備が完了していると、判断する
       $stmt = $pdo -> prepare("UPDATE members SET expel=-2,Event='Start'  WHERE Name='game'");
       $stmt -> execute();
-      $stmt = $pdo -> prepare("select count(id) from members where ID BETWEEN 1 AND 10;");
+      $stmt = $pdo -> prepare("select count(id) from members where ID != 0;");
       $stmt -> execute();
       $coloms =$stmt -> fetch(PDO::FETCH_ASSOC);
       $colom = $coloms["count(id)"];//参加人数の取得
