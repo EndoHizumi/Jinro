@@ -14,6 +14,7 @@
             <BR>category:
             <BR>
             <input type="radio" name="category" value="ready">Ready
+            <input type="radio" name="category" value="standby">Standby
             <input type="radio" name="category" value="start">start
             <input type="radio" name="category" value="restart">restart
             <input type="radio" name="category" value="nextDay">nextDay
@@ -21,6 +22,7 @@
             <input type="radio" name="category" value="end">end
             <input type="radio" name="category" value="vote">vote
             <input type="radio" name="category" value="expel">expel
+            <input type="radio" name="category" value="attack">attack
             <input type="radio" name="category" value="open">open
             <input type="radio" name="category" value="mystic">mystic
             <input type="radio" name="category" value="guard">guard
@@ -34,7 +36,7 @@
         </div>
         <script>
             jQuery(function($) {
-                var es = new EventSource('http://localhost/jinro/Broadcast.php');
+                var es = new EventSource('http://localhost:88/Broadcast.php');
                 es.onmessage = function(event) {
                     console.log(event);
                     var jdata = $.parseJSON(event.data);

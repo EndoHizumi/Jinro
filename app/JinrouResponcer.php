@@ -3,8 +3,10 @@
   require("Actorassign.php");
   $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 if(isset($_POST["category"])){
-  if($_POST["category"]=="ready"){
+  if ($_POST["category"]=="ready") {
       $stmt = $pdo -> prepare("UPDATE members SET Ready=1,Event='Ready' WHERE Name=:name");
+  }else if($_POST["category"]=="standby"){
+        $stmt = $pdo -> prepare("UPDATE members SET Ready=0,Event='Standby' WHERE Name=:name");
   }else if($_POST["category"]=="vote"){
       $stmt = $pdo -> prepare("UPDATE members SET vote=vote+1,Event='Vote' WHERE Name=:name");
   }else if($_POST["category"]=="expel"){
@@ -46,6 +48,11 @@ if(isset($_POST["category"])){
     if($_POST["category"]=="open"||$_POST["category"]=="mystic"){
       $result = $stmt -> fetch(PDO::FETCH_ASSOC);
       echo $result["job"];
+    }
+
+    if($_POST["category"]="attack"){
+      $result = $stmt -> fetch(PDO::FETCH_ASSOC);
+      print($result);
     }
 }
   function maxExpel(){
