@@ -11,7 +11,7 @@ if(isset($_POST["category"])){
     empty(maxexpel())?$max=0:$max=maxexpel();
       $stmt = $pdo -> prepare("UPDATE members SET expel=$max+1,Event='expel' WHERE Name=:name");
   }else if($_POST["category"]=="attack"){
-    $stmt = $pdo -> prepare("UPDATE members SET expel=-1,Event='Attack' WHERE Name=:name");
+    $stmt = $pdo -> prepare("UPDATE members SET expel=-1,Event='Attack' WHERE Name=:name AND guard != 1" );
   }else if($_POST["category"]=="open"){
       $stmt = $pdo -> prepare("SELECT job FROM members WHERE Name=:name ");
   }else if($_POST["category"]=="mystic"){
@@ -20,6 +20,7 @@ if(isset($_POST["category"])){
       $stmt = $pdo -> prepare("UPDATE members SET Guard=1,Event='Guard' WHERE Name=:name");
   }else if($_POST["category"]=="start"){//あとで見やすくする。
         start();
+        return 0;
   }else if($_POST["category"]=="restart"){
         $stmt = $pdo -> prepare("UPDATE members SET Job=NULL,Ready= 0,vote= 0,expel= 0,Guard= 0,Event='Restart' WHERE ID BETWEEN 1 AND 20");
   }else if($_POST["category"]=="nextDay"){
