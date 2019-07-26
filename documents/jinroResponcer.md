@@ -20,10 +20,10 @@ memberテーブルの一番大きいexpelの値をもつレコードを選択す
 
 start関数
 categoryがstartの時に呼び出される
-memberテーブルのreadyの値が０をレコードのreadyを選択する。
-選択されたreadyのカラムがないなら、ユーザー：gameのexpelを２にEventをStartに変更する。
+memberテーブルのreadyの値が0をレコードのreadyを選択する。
+選択されたreadyのカラムがないなら、ユーザー：gameのexpelを2にEventをStartに変更する。
 参加人数を取得して、actorAssigns関数をよび出す。
-カラムがある場合、The Game Play is not enough players.と返す。
+カラムがある場合、"The Game Play is not enough players."と返す。
 
 ## 作成するクエリ
 
@@ -43,16 +43,16 @@ memberテーブルのreadyの値が０をレコードのreadyを選択する。
   
 ### expel
 
-状態：ユーザーが追放された又は人狼に喰われた
+状態：ユーザーが追放された
 
-- expelの値を$maxの値＋１に更新する。
+- expelの値を$maxの値＋1に更新する。
 - Eventの値をexpelに変更する。
 
 ### attack
 
-状態:調査中(多分、人狼に喰われた)
+状態:人狼に襲撃された
 
-- expelの値を-1に更新する
+- expelの値を、-1に更新する
 - Eventの値をAttackに変更する。
 
 ### open
@@ -63,7 +63,7 @@ memberテーブルのreadyの値が０をレコードのreadyを選択する。
 
 ### mystic
 
-状態:霊媒師が前日吊るしあげた村人が人狼だったか判定した。
+状態:霊媒師が前日追放した村人は人狼か否か判定した。
 
 - expelの値が一番大きいユーザーの職業を選択する。
 
@@ -71,21 +71,21 @@ memberテーブルのreadyの値が０をレコードのreadyを選択する。
 
 状況:ガードマンが、守る村人を指定した
 
-- guardの値を１に更新する。
+- guardの値を1に更新する。
   
-### restart 
+### restart
 
 状況:ゲームをリセットする。
 
 - jobの値をNullに更新する。
-- ready/vote/expel/guardの値を０に更新する。
+- ready/vote/expel/guardの値を0に更新する。
 - Eventをrestartに更新する。
 
 ### nextDay
 
 状況:夜のターンが終わった
 
-- guard/voteの値を０に更新する。
+- guard/voteの値を0に更新する。
 - EventをNextDayに更新する。
 
 ### Quit
@@ -93,14 +93,14 @@ memberテーブルのreadyの値が０をレコードのreadyを選択する。
 状況:ゲームをログアウトする。
 
 - jobの値をNullに更新する。
-- ready/vote/expel/guardの値を０に更新する。
+- ready/vote/expel/guardの値を0に更新する。
 - Eventをquitに更新する。
 
 ### end
 
 状況:ゲームを終了させる。
 
-- ID:0のexpelを０に更新する。
+- ID:0のexpelを0に更新する。
 - ID:1から20のレコードを削除する。
 - activitylogテーブルのレコードを全削除する。
 
