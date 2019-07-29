@@ -14,7 +14,7 @@ if(isset($_POST["category"])){
       $stmt = $pdo -> prepare("UPDATE members SET expel=$max+1,Event='expel' WHERE Name=:name");
   }else if($_POST["category"]=="attack"){
     $stmt = $pdo -> prepare("UPDATE members SET expel=-1,Event='Attack' WHERE Name=:name AND guard != 1" );
-  }else if($_POST["category"]=="open"){
+  }else if($_POST["category"]=="overlook"){
       $stmt = $pdo -> prepare("SELECT job FROM members WHERE Name=:name ");
   }else if($_POST["category"]=="mystic"){
       $stmt = $pdo -> prepare("SELECT job FROM members WHERE expel=:expel ");
@@ -50,9 +50,9 @@ if(isset($_POST["category"])){
       echo $result["job"];
     }
 
-    if($_POST["category"]="attack"){
+    if($_POST["category"]=="attack"){
       $result = $stmt -> fetch(PDO::FETCH_ASSOC);
-      print($result);
+      var_export($result);
     }
 }
   function maxExpel(){
