@@ -6,23 +6,22 @@ body {
     background-attachment: fixed;
     background-position: left center;
     position: relative;
-    height: 650px;
 }
 
 .loginArea {
     position: absolute;
     top: 0;
-    bottom: 0;
     left: 0;
+    right: 0;
     bottom: 0;
     margin: auto;
-    width: 100%;
-    height: 130px;
+    width: 350px;
+    height: 0px;
 }
 
 .loginArea .loginForm {
     margin: 0 auto;
-    width: 300px;
+    width: 80%;
     padding: 1em;
     border: 1px solid #CCC;
     border-radius: 1em;
@@ -39,12 +38,11 @@ body {
 }
 
 .loginArea input {
-    width: 224px;
+    width: 100%;
 }
 
 .loginArea input:focus {
     border-color: aqua;
-    box-sizing: border-box;
 }
 
 .button {
@@ -52,7 +50,7 @@ body {
 }
 
 button {
-    width: 295px;
+    width: 100%;
 }
 
 .ErrArea {

@@ -34,6 +34,8 @@ if(isset($_POST["category"])){
       $stmt = $pdo -> prepare("DELETE FROM members WHERE ID != 0");
       $stmt -> execute();
       $stmt = $pdo -> prepare("TRUNCATE activity_logs");
+  }else if($_POST["category"]=="message"){
+      message();
   }else{
       return 0;
   }
@@ -82,4 +84,19 @@ if(isset($_POST["category"])){
       echo("The Game Play is not enough players.");
       return;
     }
+  }
+  function message(){
+    global $pdo;
+    $stmt = $pdo -> prepare("select count(id) from activity_logs;");
+    $stmt -> execute();
+    $coloms =$stmt -> fetch(PDO::FETCH_ASSOC);
+    $colom = $coloms["count(id)"];
+    $stmt = $pdo -> prepare("INSERT INTO activity_logs (ID,Name,Event,Message,time) VALUE (:id,:name,:event,:message,:time);");
+    $stmt -> bindValue(':id',$colom+1);
+    $stmt -> bindValue(':name',$_POST["name"]);
+    $stmt->bindValue(':event',"message");
+    $stmt->bindValue(':message',$_POST["message"]);
+    $stmt->bindValue(':time',date("Y/m/d H:i:s"));
+    $stmt -> execute();
+    exit();
   }

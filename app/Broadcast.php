@@ -28,6 +28,7 @@ function write($Array){
         'ID' => $logid ,
         'Name'=> $data['Name'] ,
         'Event'=> $data['Event'],
+        'Message'=>$data['Message'],
         'time'=> $time
       )
     );
