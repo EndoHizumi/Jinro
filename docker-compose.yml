@@ -9,6 +9,8 @@ services:
       - 88:80
       - 8081:8081
       - 8080:8080
+    environment:
+      PATH: /usr/lib/node_modules/@vue/cli/bin/:$PATH
 
   jinro_db:
     image: mysql:5.6

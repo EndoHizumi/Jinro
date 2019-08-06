@@ -4,3 +4,6 @@ RUN docker-php-ext-install pdo_mysql mbstring tidy zip
 # nodejsのセットアップ
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
 RUN apt-get install -y nodejs
+# Vue.jsのインストール
+RUN npm install -g @vue/cli
+RUN npm install -g @vue/cli-service-global
