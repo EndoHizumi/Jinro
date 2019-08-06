@@ -1,16 +1,24 @@
 <template>
-  <div class="chat">
-    {{messageDatas}}
-    <div class="message" v-for="message in messageDatas" v-bind:key="message.id">
-      <div vclass="head">
-        {{message.id}}
-        <span class="head__name">{{message.name}}</span>
+    <div class="chat">
+      {{messageDatas}}
+      <div class="message" v-for="message in messageDatas" v-bind:key="message.id">
+        <div vclass="head">
+          <span class="head__name">{{message.name}}</span>
+        </div>
+        <div class="body">
+          <p class="body__text">{{message.text}}</p>
+        </div>
       </div>
-      <div class="body">
-        <p class="body__text">{{message.text}}</p>
+      <div class="toolbar">
+        <div class="toolbar__header">
+          <button class="toolbar__actionbutton" type="button">action</button>
+        </div>
+        <div class="inputarea">
+          <input class="inputarea__text" type="text" />
+          <button class="inputarea__submit" type="submit">send</button>
+        </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -22,7 +30,13 @@ export default {
     return {
       lastid: 1,
       messageDatas: [
-        { id: 0, name: "hizumi", text: "ホゲホゲ", icon: "gameMaster.png" }
+        {
+          id: 0,
+          name: "hizumi",
+          text:
+            "ホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲ",
+          icon: "gameMaster.png"
+        }
       ]
     };
   },
@@ -54,18 +68,31 @@ export default {
 .head_name {
   font-weight: bold;
 }
-.body {
-  position: relative;
-  left: 35px;
-}
-
 .body__text {
   margin: 0px;
-  width: 100%;
+  width: 95vw;
   height: 100%;
   min-width: 350px;
   border: solid 1px black;
   border-radius: 10px;
-  padding-left: 10px;
+  padding-left: 5px;
+  margin-left: 10px;
+}
+.toolbar {
+  position: absolute;
+  bottom: 25px;
+  width: 99vw;
+  height: 50px;
+}
+.inputarea  button{
+  height: 33px;
+}
+.toolbar__actionbutton{
+  width: 100%;
+  height: 35px;
+}
+.inputarea__text{
+  width: 94vw;
+  height: 25px;
 }
 </style>
