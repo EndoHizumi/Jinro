@@ -1,6 +1,6 @@
 <template>
-    <div class="chat">
-      {{messageDatas}}
+  <div class="chat">
+    <div class="messagearea">
       <div class="message" v-for="message in messageDatas" v-bind:key="message.id">
         <div vclass="head">
           <span class="head__name">{{message.name}}</span>
@@ -9,35 +9,35 @@
           <p class="body__text">{{message.text}}</p>
         </div>
       </div>
-      <div class="toolbar">
-        <div class="toolbar__header">
-          <button class="toolbar__actionbutton" type="button">action</button>
-        </div>
-        <div class="inputarea">
-          <input class="inputarea__text" type="text" />
-          <button class="inputarea__submit" type="submit">send</button>
-        </div>
+    </div>
+    <div class="toolbar">
+      <div class="toolbar__header">
+        <button class="toolbar__actionbutton" type="button">action</button>
+      </div>
+      <div class="inputarea">
+        <input class="inputarea__text" type="text" ref="text" />
+        <button
+          class="inputarea__submit"
+          type="submit"
+          v-on:click="submitMessage($refs.text.value)"
+          v-on:click:enter="submitMessage($refs.text.value)"
+        >send</button>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
 export default {
   /* eslint-disable */
   name: "Chat",
-  props: {},
+  props: {
+    name: String
+  },
   data() {
     return {
       lastid: 1,
-      messageDatas: [
-        {
-          id: 0,
-          name: "hizumi",
-          text:
-            "ホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲホゲ",
-          icon: "gameMaster.png"
-        }
-      ]
+      messageDatas: []
     };
   },
   methods: {
@@ -48,7 +48,11 @@ export default {
         text: message.Message,
         icon: "gameMaster.png"
       });
-      this.lastid += 1;
+      this.lastid += message.id;
+    },
+    submitMessage(text) {
+      const message = { name: this.name, message: text };
+      this.$emit("submit", message);
     }
   }
 };
@@ -80,19 +84,49 @@ export default {
 }
 .toolbar {
   position: absolute;
-  bottom: 25px;
+  left: 4px;
+  right:4px;
+  bottom: 0;
   width: 99vw;
-  height: 50px;
+  overflow: hidden;
 }
-.inputarea  button{
-  height: 33px;
+.toolbar button {
+  border: 0;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 24px;
+  outline: 0;
 }
-.toolbar__actionbutton{
+.toolbar__actionbutton {
+  width: 360px;
+  height: 47px;
+  background: #4be651;
+}
+.toolbar button:hover {
+  opacity: 0.8;
+}
+.toolbar button:active {
+  padding: 5px gray;
+}
+.inputarea {
+  width: 100%;
+  height: 40px;
+}
+.inputarea button {
+  width: 50px;
+  height: 43px;
+  background: #232d31;
+  position: relative;
+  bottom: 4px;
+}
+.toolbar__actionbutton {
   width: 100%;
   height: 35px;
 }
-.inputarea__text{
-  width: 94vw;
-  height: 25px;
+.inputarea__text {
+  width: calc(100% - 50px);
+  height: 94%;
+  font-size: 32px;
+  outline: 0;
 }
 </style>
