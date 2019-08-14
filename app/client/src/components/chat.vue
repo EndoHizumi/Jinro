@@ -12,16 +12,22 @@
     </div>
     <div class="toolbar">
       <div class="toolbar__header">
-        <button class="toolbar__actionbutton" type="button">action</button>
+        <button class="toolbar__actionbutton" type="button">
+          <span class="actionbutton__name">action</span>
+        </button>
       </div>
       <div class="inputarea">
-        <input class="inputarea__text" type="text" ref="text" />
+        <input
+          class="inputarea__text"
+          type="text"
+          ref="text"
+          v-on:keyup.ctrl.exact.enter="submitMessage($refs.text.value)"
+        />
         <button
           class="inputarea__submit"
           type="submit"
           v-on:click="submitMessage($refs.text.value)"
-          v-on:click:enter="submitMessage($refs.text.value)"
-        >send</button>
+        >＞</button>
       </div>
     </div>
   </div>
@@ -49,84 +55,97 @@ export default {
         icon: "gameMaster.png"
       });
       this.lastid += message.id;
+      var $this = this;
+      this.$nextTick(function() {
+        var container = $this.$el.querySelector(".messagearea");
+        container.scrollTo(0,container.scrollHeight);
+      });
     },
     submitMessage(text) {
       const message = { name: this.name, message: text };
       this.$emit("submit", message);
+      var container = this.$el.querySelector(".inputarea__text");
+      container.value = "";
     }
   }
 };
 </script>
 
 <style>
+.messagearea {
+  width: 100vw;
+  height: calc(100vh - 211px);
+  overflow: scroll;
+}
 .message {
   position: relative;
   min-width: 250px;
   max-width: 95%;
+  margin-top: 5px;
 }
 .head__icon {
   width: 32px;
   height: 32px;
   padding-top: 15px;
 }
-.head_name {
+.head__name {
   font-weight: bold;
+  color: white;
+  font-size: 16px;
 }
 .body__text {
   margin: 0px;
-  width: 95vw;
+  width: 99%;
   height: 100%;
   min-width: 350px;
-  border: solid 1px black;
   border-radius: 10px;
-  padding-left: 5px;
+  padding: 5px;
   margin-left: 10px;
+  background-color: whitesmoke;
 }
 .toolbar {
-  position: absolute;
-  left: 4px;
-  right:4px;
-  bottom: 0;
-  width: 99vw;
-  overflow: hidden;
+  position: relative;
 }
 .toolbar button {
-  border: 0;
-  color: #ffffff;
-  font-weight: bold;
-  font-size: 24px;
   outline: 0;
-}
-.toolbar__actionbutton {
-  width: 360px;
-  height: 47px;
-  background: #4be651;
+  border: 0;
 }
 .toolbar button:hover {
   opacity: 0.8;
 }
 .toolbar button:active {
-  padding: 5px gray;
-}
-.inputarea {
-  width: 100%;
-  height: 40px;
-}
-.inputarea button {
-  width: 50px;
-  height: 43px;
-  background: #232d31;
-  position: relative;
-  bottom: 4px;
+  opacity: 1;
 }
 .toolbar__actionbutton {
-  width: 100%;
-  height: 35px;
+  width: 100vw;
+  height: 47px;
+
+  background: #4be651;
+}
+.actionbutton__name {
+  font-size: 36px;
+  line-height: 28px;
+  text-align: center;
+  font-weight: bold;
+  color: #ffffff;
+}
+.inputarea {
+  width: 100vw;
+  height: 54px;
+}
+.inputarea * {
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+}
+.inputarea__submit {
+  width: 54px;
+  height: 54px;
+  background: #232d31;
 }
 .inputarea__text {
-  width: calc(100% - 50px);
-  height: 94%;
-  font-size: 32px;
-  outline: 0;
+  width: calc(100% - 54px);
+  height: 53px;
+  border: 0;
 }
 </style>
