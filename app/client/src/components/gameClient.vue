@@ -33,17 +33,17 @@ export default {
         Accept: "application/json",
         "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
       };
-      fetch('http://localhost:88/JinrouResponcer.php',{method,headers,body}).then(res => {
+      fetch('JinrouResponcer.php',{method,headers,body}).then(res => {
         console.log(res.text());
 
       })
     },
     receiveEvent(message){
-      
+
     }
   },
   created() {
-    es = new EventSource("http://localhost:88/Broadcast.php?roomId=hoge");
+    es = new EventSource("Broadcast.php");
     let vue = this;
     es.onmessage = function(event) {
       let jdata = JSON.parse(event.data);
