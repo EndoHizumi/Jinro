@@ -9,7 +9,8 @@ create table members
     guard int,
     event varchar(255),
     job varchar(255),
-    vote int
+    vote int,
+    roomid varchar(255)
 );
 create table actors
 (
@@ -21,7 +22,16 @@ create table actors
     cracker int,
     mystic int
 );
-INSERT INTO members VALUES (0, "room", 0, 0, 0, '', "koke", 0);
+create table room
+(
+    id int NOT NULL AUTO_INCREMENT,
+    name varchar(255),
+    pass varchar(255),
+    isstart int,
+    owner varchar(255),
+    primary key(id)
+);
+
 create table activity_logs
 (
     ID int NOT NULL AUTO_INCREMENT,
@@ -29,6 +39,7 @@ create table activity_logs
     Event varchar(255),
     Message varchar(255),
     time datetime,
+    roomid int,
     primary key(id)
 );
     
