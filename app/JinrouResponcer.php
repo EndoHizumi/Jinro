@@ -16,7 +16,7 @@
 
  function runQuery(string $statement, array $bindParamMap=[])
  {
-     // bindParamMapが入力されなかった場合、:nameをバインドに設定する。。
+     // bindParamMapが入力されなかった場合、:nameをバインドに設定する。
      if (empty($bindParamMap)) {
          $playerName = filter_input(INPUT_POST, "name", FILTER_SANITIZE_STRING);
          $bindParamMap= [":name"=>$playerName];
@@ -28,8 +28,12 @@
      foreach ($bindParamMap as $key => $value) {
          $query -> bindParam($key, $value);
      }
-     $query -> execute();
+     $execResult = $query -> execute();
      $result =$query -> fetch(PDO::FETCH_ASSOC);
+     // INSERTやUPDATEのときは、executeの結果を変えす。
+     if (!$result){
+         $result = $execResult;
+     }
      return $result;
  }
 
@@ -101,7 +105,7 @@
       $gameOK = runQuery("SELECT `Ready` FROM `members` WHERE Ready= 0 AND ID != 0");
       if (isset($gameOK["Ready"])===false) {//Readyが0のカラムがない＝全員の準備が完了していると、判断する
           runQuery("UPDATE members SET expel=-2,Event='Start'  WHERE Name='game'");
-          $coloms =runQuery("select count(id) from members where ID != 0;")["count(id)"];//参加人数の取得
+          $colom =runQuery("select count(id) from members where ID != 0;")["count(id)"];//参加人数の取得
           actorAssigns($colom);
       } else {
           return("The Game Play is not enough players.");
@@ -129,5 +133,31 @@
         ':pass' => filter_input(INPUT_POST, "pass", FILTER_SANITIZE_STRING),
         ':owner' => filter_input(INPUT_POST, "owner", FILTER_SANITIZE_STRING)
       ];
-      runQuery($statement, $params);
+      return runQuery($statement, $params);
+  }
+
+  function enter(){
+      // 部屋の情報を取得する。
+      $roomInfo = runQuery("SELECT ID,job,expel FROM `members` WHERE id=0;");
+      $requestPass = filter_input(INPUT_POST,"pass",FILTER_SANITIZE_STRING);
+      $requestName = filter_input(INPUT_POST,"name",FILTER_SANITIZE_STRING);
+      try {          
+          if ($roomInfo['job'] == $requestPass&&!empty($requestName)){
+              $colom = runQuery("select count(id) from members")["count(id)"];
+              $statement = "INSERT INTO members (ID,Name,Event) VALUE (:id,:name,\"Enter\");";
+              $params = [
+                  ':id' => $colom+1,
+                  ':name'=> $requestName
+              ];
+              $result = runQuery($statement,$params);
+              return $result ? "Welcome to ${requestName}":"Login Failure";
+          }else{
+            return "Login Failure";
+          }
+      } catch (PDOException $e) {
+        require_once("ExceptionMapping.php");
+        $message = $e->getMessage();
+        $exceptionmsg = new ExceptionMapping($message);
+        return $exceptionmsg -> SQLExceptionMessenger();
+      }
   }
