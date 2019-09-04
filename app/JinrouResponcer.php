@@ -5,13 +5,13 @@
  if ($category!==null) {
      try {
          $result= $category();
-         echo is_null($result)?"true":$result;
+         echo is_null($result)?"true\n":$result;
      } catch (\Throwable $th) {
          echo $th;
-         echo "false";
+         echo "false\n";
     }
 } else {
-    echo "invalid endpoint";
+    echo "invalid endpoint\n";
  }
 
  function runQuery(string $statement, array $bindParamMap=[])
