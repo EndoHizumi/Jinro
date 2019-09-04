@@ -42,6 +42,8 @@ create table activity_logs
     roomid int,
     primary key(id)
 );
+
+INSERT INTO members VALUES (0,"room",0,0,0,'',"koke",0,"hoge");
     
 CREATE TRIGGER updateMember AFTER UPDATE ON members FOR EACH ROW insert into activity_logs(name,event,time) value(new.name,new.event,Now());
 
