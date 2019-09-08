@@ -9,8 +9,7 @@
         return;
     }
     try {
-        $requestToken = filter_input(INPUT_COOKIE, "token", FILTER_SANITIZE_STRING);
-        if ($category != "enter" and ($_SESSION["token"] != $requestToken or empty($_SESSION['token']))) {
+        if ($category != "enter" && empty($_SESSION['name'])) {
             header("HTTP/1.1 401 Unauthorized\n");
             return;
         }
@@ -19,17 +18,13 @@
     } catch (\Throwable $th) {
         echo $th;
         echo "false\n";
-    }finally{
-        var_dump($_COOKIE);
-        echo("------------\n");
-        var_dump($_SESSION);
     }
  
     function runQuery(string $statement, array $bindParamMap=[])
     {
         // bindParamMapが入力されなかった場合、:nameをバインドに設定する。
         if (empty($bindParamMap)) {
-            $playerName = filter_input(INPUT_POST, "name", FILTER_SANITIZE_STRING);
+            $playerName = $_SESSION['name'];
             $bindParamMap = [":name"=>$playerName];
         };
         global $pdo;
@@ -153,6 +148,10 @@
         return runQuery($statement, $params);
     }
 
+    function me(){
+       return $_SESSION['name'];
+    }
+
     function enter()
     {
         // 部屋の情報を取得する。
@@ -168,9 +167,7 @@
                 ':name'=> $requestName
             ];
             $result = runQuery($statement, $params);
-            $token = openssl_random_pseudo_bytes(256);
-            $_SESSION['token'] = $token;
-            setcookie("token", $token);
+            $_SESSION['name'] = $requestName;
             return $result ? "[000] Welcome to ${requestName}\n":"[999] Login Failure\n";
         } else {
             // パスワードが一致しない。
