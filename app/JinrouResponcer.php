@@ -6,11 +6,13 @@
     $category = mb_strtolower(filter_input(INPUT_POST, "category", FILTER_SANITIZE_STRING), "UTF-8");
     if (empty($category)) {
         header("HTTP/1.1 404 Not Found");
+        echo ("<h1> Not Found</h1>");
         return;
     }
     try {
         if ($category != "enter" && empty($_SESSION['name'])) {
             header("HTTP/1.1 401 Unauthorized\n");
+            echo ("<h1> 401 Unauthorized</h1>");
             return;
         }
         $result = $category();
@@ -23,7 +25,7 @@
     function runQuery(string $statement, array $bindParamMap=[])
     {
         // bindParamMapが入力されなかった場合、:nameをバインドに設定する。
-        if (empty($bindParamMap)) {
+        if (count($bindParamMap)===0) {
             $playerName = $_SESSION['name'];
             $bindParamMap = [":name"=>$playerName];
         };
@@ -32,7 +34,7 @@
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $query = $pdo -> prepare($statement);
         foreach ($bindParamMap as $key => $value) {
-            $query -> bindParam($key, $value);
+              $query -> bindParam($key, $value);
         }
         try{
             $execResult = $query -> execute();
@@ -127,11 +129,11 @@
     function message()
     {
         $colom=runQuery("select count(id) from activity_logs;")["count(id)"];
-        $statement = ("INSERT INTO activity_logs (ID,Name,Event,Message,time) VALUE (:id,:name,:event,\"message\",:time);");
+        $statement = ("INSERT INTO activity_logs (ID,Name,Event,Message,time) VALUE (:id,:name,\"message\",:message,:time);");
         $params = [
         ':id' => $colom+1,
-        ':name' => filter_input(POST, "name", FILTER_SANITIZE_STRING),
-        ':message' => filter_input(POST, "message", FILTER_SANITIZE_STRING),
+        ':name' => filter_input(INPUT_POST, "name", FILTER_SANITIZE_STRING),
+        ':message' => filter_input(INPUT_POST, "message", FILTER_SANITIZE_STRING),
         ':time' => date("Y/m/d H:i:s")
         ];
         runQuery($statement, $params);
