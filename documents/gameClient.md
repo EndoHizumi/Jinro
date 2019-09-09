@@ -204,7 +204,6 @@ API呼出：Ajax
 - chat.vue
   - 子コンポーネント
     - toolbar.vue
-    - messageView.vue
   - プロパティ
     - messages:Array(message)
     - sendUrl
@@ -218,7 +217,6 @@ API呼出：Ajax
     - icon
     - background
 - toolbar.vue
-- messageView.vue
 - header.vue
 
 ### その他オブジェクト
