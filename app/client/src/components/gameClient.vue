@@ -27,22 +27,28 @@ export default {
     sendMessage(message) {
       const name=encodeURIComponent(message.name);
       const text=encodeURIComponent(message.message);
+      $result = sendActivity(`name=${name}&message=${text}&category=message`);
+      return $result;
+    },
+    receiveEvent(message){
+
+    },
+    sendActivity(requestBody){
       const method="POST"
-      const body=`name=${name}&message=${text}&category=message`
+      const body=requestBody
       const headers = {
         Accept: "application/json",
         "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
       };
       fetch('JinrouResponcer.php',{method,headers,body}).then(res => {
-        console.log(res.text());
-
+        return res;
       })
-    },
-    receiveEvent(message){
-
     }
   },
   created() {
+    if (sendActivity("category=me")){
+      
+    }
     es = new EventSource("Broadcast.php");
     let vue = this;
     es.onmessage = function(event) {
