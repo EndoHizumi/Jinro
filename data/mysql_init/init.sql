@@ -28,6 +28,8 @@ create table room
     name varchar(255),
     pass varchar(255),
     isstart int,
+    day int,
+    timezone int,
     owner varchar(255),
     primary key(id)
 );
