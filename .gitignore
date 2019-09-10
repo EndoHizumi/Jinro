@@ -60,3 +60,6 @@ mysql_data
 node_modules
 dist
 out
+css/
+js/
+index.html
