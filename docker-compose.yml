@@ -1,8 +1,9 @@
-version: "3"
+version: '3.7'
 services:
 
   jinro:
     build: .
+    target: dev
     volumes: 
       - ./app:/var/www/html
     ports:
