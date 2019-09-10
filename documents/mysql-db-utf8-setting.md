@@ -15,7 +15,7 @@ show create table {tableName}
 
 ALTER TABLE {targettable} CONVERT TO CHARACTER SET utf8;
 
-## 操作手順
+## やったこと
 
 テーブルの文字コードをUTF-8にする。（文字を保存するテーブルをUTF-8）
 これだけだと、クライアントとやりとり中に、文字化けする。
