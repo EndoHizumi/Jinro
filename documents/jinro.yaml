@@ -1,0 +1,46 @@
+swagger: "2.0"
+info:
+  description: "これは、Jinro WebAPIについての資料です。"
+  version: "1.0.0"
+  title: "Jinro WebAPI"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "endohizumi0114@gmail.com"
+  license:
+    name: "MIT License"
+    url: "https://github.com/EndoHizumi/Jinro/blob/develop/LICENSE"
+host: "api.ws-factory.net"
+basePath: "/jinro"
+tags:
+- name: "jobs"
+  description: "プレイヤーの役職についてのエンドポイントです。"
+schemes:
+- "https"
+paths:
+  /jobs/{userName}:
+    get:
+      tags:
+      - "jobs"
+      summary: "役職情報API"
+      description: "指定されたuserNameの役職を返します"
+      parameters:
+      - name: "userName"
+        in: "path"
+        description: "取得したいユーザーの名前"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "成功時のレスポンス"
+          schema:
+            type: "object"
+            properties:
+              result:
+                type: "boolean"
+                format: "int64"
+              value:
+                type: "string"
+                example: "Villagers"
+        401:
+          description: "未認証のレスポンス"
+        
