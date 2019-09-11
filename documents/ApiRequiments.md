@@ -6,7 +6,12 @@
     - [Endpoint](#endpoint)
       - [jobs](#jobs)
       - [players](#players)
+<<<<<<< HEAD
       - [games](#games)
+=======
+      - [rooms](#rooms)
+      - [times](#times)
+>>>>>>> 7b7e2803811a5552c4f0c0d6cd9505ae20697fb1
       - [messages](#messages)
   - [メソッド要件](#%e3%83%a1%e3%82%bd%e3%83%83%e3%83%89%e8%a6%81%e4%bb%b6)
     - [ゲーム全体制御系](#%e3%82%b2%e3%83%bc%e3%83%a0%e5%85%a8%e4%bd%93%e5%88%b6%e5%be%a1%e7%b3%bb)
@@ -43,7 +48,11 @@
   ``` json
   {
     "result": boolean, // 処理の成否
+<<<<<<< HEAD
     "reason": String // 処理結果（またはエラーメッセージ)
+=======
+    "value": String // 処理結果（またはエラーメッセージ)
+>>>>>>> 7b7e2803811a5552c4f0c0d6cd9505ae20697fb1
   }
   ```
 
@@ -51,6 +60,7 @@
 
 #### jobs
 
+<<<<<<< HEAD
 - path:/{userName}
   - method:GET
   - body:overlook/mystic
@@ -76,6 +86,47 @@
 
 - path:/vote/{userName}
   - method:PUT
+=======
+- path: /
+  - GET
+    - param
+      - playerName
+      - overlook/mystic
+  - PUT
+    - param
+      - usenName
+      - job
+
+#### players
+
+- path: /state/{userName}
+  - PUT
+    - param
+      - name
+        - userName
+      - name
+        - ready
+      - name
+        - standby
+
+- path: /{userName}
+  - POST
+    - param
+      - name
+        - userName
+
+- path:/{userName}
+  - DELETE
+    - param
+      - name
+        - userName
+
+- path:/vote/{userName}
+  - PUT
+    - param
+      - name
+        - userName
+>>>>>>> 7b7e2803811a5552c4f0c0d6cd9505ae20697fb1
 
 - path:/expel/{userName}
   - method:PUT
@@ -86,30 +137,43 @@
 - path:/guard/{userName}
   - method:PUT
 
+<<<<<<< HEAD
 #### games
+=======
+#### rooms
+>>>>>>> 7b7e2803811a5552c4f0c0d6cd9505ae20697fb1
 
 - path:/
   - method:GET
   - body:roomName/pass
     - type:string
 
+<<<<<<< HEAD
 - path:/state
   - method:PUT
   - body:start/end
     - type:string
+=======
+#### times
+>>>>>>> 7b7e2803811a5552c4f0c0d6cd9505ae20697fb1
 
 - path:/
   - method:POST
   - description:createRoom
 
+<<<<<<< HEAD
 - path:/
   - method:DELETE
   - description:breakRoom
+=======
+#### messages
+>>>>>>> 7b7e2803811a5552c4f0c0d6cd9505ae20697fb1
 
 - path:/nextDay
   - method:PUT
   - description:nextDay
 
+<<<<<<< HEAD
 - path:/nextTime
   - method:PUT
   - description:nextTime
@@ -120,6 +184,8 @@
   - method:PUT
   - description:addMessage
 
+=======
+>>>>>>> 7b7e2803811a5552c4f0c0d6cd9505ae20697fb1
 ## メソッド要件
 
 ### ゲーム全体制御系
