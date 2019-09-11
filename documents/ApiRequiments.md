@@ -2,7 +2,12 @@
 
 - [JinroWebAPI要件](#jinrowebapi%e8%a6%81%e4%bb%b6)
   - [URLフォーマット](#url%e3%83%95%e3%82%a9%e3%83%bc%e3%83%9e%e3%83%83%e3%83%88)
-  - [呼び出すリソースとRESTメソッドごとに呼び出せるクラスメソッド](#%e5%91%bc%e3%81%b3%e5%87%ba%e3%81%99%e3%83%aa%e3%82%bd%e3%83%bc%e3%82%b9%e3%81%a8rest%e3%83%a1%e3%82%bd%e3%83%83%e3%83%89%e3%81%94%e3%81%a8%e3%81%ab%e5%91%bc%e3%81%b3%e5%87%ba%e3%81%9b%e3%82%8b%e3%82%af%e3%83%a9%e3%82%b9%e3%83%a1%e3%82%bd%e3%83%83%e3%83%89)
+  - [Endpoint](#endpoint)
+    - [jobs](#jobs)
+    - [players](#players)
+    - [rooms](#rooms)
+    - [times](#times)
+    - [messages](#messages)
   - [レスポンスフォーマット](#%e3%83%ac%e3%82%b9%e3%83%9d%e3%83%b3%e3%82%b9%e3%83%95%e3%82%a9%e3%83%bc%e3%83%9e%e3%83%83%e3%83%88)
   - [ゲーム全体制御系](#%e3%82%b2%e3%83%bc%e3%83%a0%e5%85%a8%e4%bd%93%e5%88%b6%e5%be%a1%e7%b3%bb)
     - [ready](#ready)
@@ -31,38 +36,63 @@
 
 `/jinro/api/v1/(user|game|room|message|jinromessage)/{domain}`
 
-## 呼び出すリソースとRESTメソッドごとに呼び出せるクラスメソッド
+## Endpoint
 
-補足： 1つの場合は、自動的に呼ばれるため、指定できない（無視される）
+### jobs
 
-- member
-  - GET
-    - overlook
-    - mystic
-  - POST
-    - enter
+- paths:
+- /:
+- GET
+  - param:
+    - playerName
+    - overlook/mystic
+- PUT
+  - param:
+    - usenName
+    - job
+
+### players
+
+- path
+- /state/{userName}
   - PUT
-    - vote
-    - expel
-    - attack
-    - guard
-    - ready
-    - standby
-  - DELETE
-    - quit
-- room
-  - PUT
-    - nextDay
-    - nextTime
-  - POST
-    - begin
-    - createRoom
-  - DELETE
-    - breakRoom
-    - exit
-- message
-  - POST
-    - addMessage(jinro:boolean)
+    - param
+      - name
+        - userName
+      - name
+        - ready
+      - name
+        - standby
+      - 
+- path:/
+  - method:POST
+- path:/
+  - method:DELETE
+
+- path:/vote/{userName}
+  - method:PUT
+- path:/expel/{userName}
+  - method:PUT
+- path:/attack/{userName}
+  - method:PUT
+- path:/guard/{userName}
+  - method:PUT
+
+### rooms
+
+/:GET:showroom
+/state:PUT:start/end
+/:POST:createRoom
+/:DELETE:breakRoom
+
+### times
+
+- nextDay
+- nextTime
+
+### messages
+
+/:PUT:addMessage
 
 ## レスポンスフォーマット
 
