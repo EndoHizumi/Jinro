@@ -3,7 +3,6 @@ info:
   description: "これは、Jinro WebAPIについての資料です。"
   version: "1.0.0"
   title: "Jinro WebAPI"
-  termsOfService: "http://swagger.io/terms/"
   contact:
     email: "endohizumi0114@gmail.com"
   license:
@@ -13,21 +12,57 @@ host: "api.ws-factory.net"
 basePath: "/jinro"
 tags:
 - name: "jobs"
-  description: "プレイヤーの役職についてのエンドポイントです。"
+  description: "プレイヤーの役職取得・設定"
+- name: "players"
+  description: "プレイヤーの状態取得・操作"
+- name: "rooms"
+  description: "ゲームルームの操作"
 schemes:
 - "https"
 paths:
-  /jobs/{userName}:
+  /jobs/:
+      post:
+        tags:
+        - "jobs"
+        summary: "役職設定API"
+        description: "指定されたuserNameの役職を設定します"
+        parameters: 
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            $ref: '#/definitions/Job'        
+        responses:
+          200:
+            description: "成功時のレスポンス"
+            schema:
+              type: "object"
+              properties:
+                result:
+                  type: "boolean"
+                  format: "int64"
+                value:
+                  type: "string"
+                  example: ""
+          401:
+            description: "未認証のレスポンス"
+          
+  /jobs/{userName}/:
     get:
       tags:
       - "jobs"
-      summary: "役職情報API"
+      summary: "役職取得API"
       description: "指定されたuserNameの役職を返します"
       parameters:
       - name: "userName"
         in: "path"
         description: "取得したいユーザーの名前"
         required: true
+        type: "string"
+      - name: "expel"
+        description: "trueにすると、昨日、追放または襲撃されたユーザーを返す"
+        in: "query"
+        required: false
         type: "string"
       responses:
         200:
@@ -43,4 +78,482 @@ paths:
                 example: "Villagers"
         401:
           description: "未認証のレスポンス"
+    
+  /players/{userName}:
+    get:
+      tags:
+      - "players"
+      summary: "ユーザー名の取得"
+      description: "指定したユーザーの名前を取得する"
+      parameters:
+      - name: userName
+        in: "path"
+        type: "string"
+        required: true
+      responses:
+        200:
+          description: "成功時のレスポンス"
+          schema:
+            type: "object"
+            properties:
+              result:
+                type: "boolean"
+                format: "int64"
+              value:
+                type: "string"
+                example: "taro"
+        401:
+          description: "未認証のレスポンス"
+
+  /players/state/:
+    put:
+      tags:
+      - "players"
+      summary: "準備状態変更"
+      description: "指定されたuserNameの準備状況を変更します。自分以外の変更はできません"
+      parameters:
+      - name: "body"
+        in: "body"
+        description: "変更したいユーザーの名前と状態"
+        required: true
+        schema:
+          $ref: '#/definitions/Status'
+
+      responses:
+        200:
+          description: "成功時のレスポンス"
+          schema:
+            type: "object"
+            properties:
+              result:
+                type: "boolean"
+                format: "int64"
+              value:
+                type: "string"
+                example: "Villagers"
+        401:
+          description: "未認証のレスポンス"
+  
+  /players/message/:
+    put:
+      tags:
+      - "players"
+      summary: "メッセージの送信"
+      description: "指定ユーザーの発言を更新します。指定ユーザーと認証ユーザーが一致している必要があります"
+      parameters:
+      - name: "body"
+        in: "body"
+        description: "変更したいユーザーの名前と状態"
+        required: true
+        schema:
+          $ref: '#/definitions/Status'
+
+      responses:
+        200:
+          description: "成功時のレスポンス"
+          schema:
+            type: "object"
+            properties:
+              result:
+                type: "boolean"
+                format: "int64"
+              value:
+                type: "string"
+                example: "Villagers"
+        401:
+          description: "未認証のレスポンス"
+  
+  /players/vote/:
+    put:
+      tags:
+      - "players"
+      summary: "投票するユーザーを指定する"
+      description: "指定ユーザーに票を入れる。自分を指定することはできない。"
+      parameters:
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+
+      responses:
+        200:
+          description: OK
+          schema:
+            type: "object"
+            properties:
+              result:
+                type: "boolean"
+              value:
+                type: "string"
+                example: ""
+        401:
+          description: "未認証のレスポンス"
+
+  /players/expel/:
+    put:
+      tags:
+      - "players"
+      summary: "追放するユーザーを指定する"
+      description: "指定ユーザーを追放する。自分を指定することはできない。"
+      parameters:
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+
+      responses:
+        200:
+          description: OK
+          schema:
+            type: "object"
+            properties:
+              result:
+                type: "boolean"
+              value:
+                type: "string"
+                example: ""
+        401:
+          description: "未認証のレスポンス"
+  
+  /players/attack/:
+    put:
+      tags:
+      - "players"
+      summary: "襲撃するユーザーを指定する。"
+      description: "人狼が襲撃するユーザーを指定する。自分を指定することはできない。人狼の役職がないユーザーからのリクエストは失敗する。事前にguardで指定されているユーザーを指定した場合は、失敗する。"
+      parameters:
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+
+      responses:
+        200:
+          description: OK
+          schema:
+            type: "object"
+            properties:
+              result:
+                type: "boolean"
+              value:
+                type: "string"
+                example: ""
+        401:
+          description: "未認証のレスポンス"
+  
+  /players/guard/:
+    put:
+      tags:
+      - "players"
+      summary: "人狼の襲撃から守るユーザーの指定"
+      description: "襲撃から守るユーザーを指定する。自分を指定することはできない。連続してユーザーを指定出来ない。"
+      parameters:
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+
+      responses:
+        200:
+          description: OK
+          schema:
+            type: "object"
+            properties:
+              result:
+                type: "boolean"
+              value:
+                type: "string"
+                example: ""
+        401:
+          description: "未認証のレスポンス"
+
+  /rooms/:
+    get:
+      tags:
+      - "rooms"
+      summary: "ゲームルーム一覧取得"
+      description: "現在あるゲームルームの一覧を取得します。"
+
+      responses:
+        200:
+          description: "成功時のレスポンス"
+          schema:
+            type: "object"
+            properties:
+              result:
+                type: "boolean"
+              value:
+                type: "array"
+                items:
+                  type: "string"
+                example: 
+                  - "room1"
+                  - "room2"
+                  - "room3"
+        401:
+          description: "未認証のレスポンス"
+    post:
+      tags:
+      - "rooms"
+      summary: "部屋の作成"
+      description: "指定された入力でゲームルームを作成します"
+      parameters:
+      - name: "roomName"
+        in: "query"
+        description: "部屋名"
+        required: true
+        type: "string"
+      - name: "password"
+        in: "query"
+        description: "パスワード"
+        required: true
+        type: "string"
+      - name: "description"
+        in: "query"
+        description: "部屋の説明"
+        required: true
+        type: "string"
+
+      responses:
+        200:
+          description: "成功時のレスポンス"
+          schema:
+            type: "object"
+            properties:
+              result:
+                type: "boolean"
+                format: "int64"
+              value:
+                type: "string"
+                example: ""
+        401:
+          description: "未認証のレスポンス"
+    delete:
+      tags:
+      - "rooms"
+      summary: "部屋の削除"
+      description: "指定された部屋名を削除します。"
+      parameters:
+      - name: "body"
+        in: "body"
+        description: "削除したいルーム名"
+        required: true
+        schema:
+          $ref: '#/definitions/Status'
+
+      responses:
+        200:
+          description: "成功時のレスポンス"
+          schema:
+            type: "object"
+            properties:
+              result:
+                type: "boolean"
+                format: "int64"
+              value:
+                type: "string"
+                example: "Villagers"
+        401:
+          description: "未認証のレスポンス"
+
+  /rooms/{roomName}/:
+    get:
+      tags:
+      - "rooms"
+      summary: "ゲームルーム情報取得"
+      description: "指定したゲームルームの名前・説明・参加人数を取得します。"
+      parameters:
+      - name: "roomName"
+        in: "path"
+        type: "string"
+        description: "取得したい部屋の名前"
+        required: true
+
+      responses:
+        200:
+          description: "成功時のレスポンス"
+          schema:
+            type: "object"
+            properties:
+              result:
+                type: "boolean"
+              name: 
+                type: "string"
+                example: "roomName"
+              description: 
+                type: "string"
+                example: "hogehoge"
+              count: 
+                type: "integer"
+                example: 114514
+
+        401:
+          description: "未認証のレスポンス"
+          
+  /rooms/enter/:
+    post:
+      tags: 
+      - "rooms"
+      summary: "ゲームルームへ入室"
+      description: "指定ゲームルームへの入室処理を行う。"
+      parameters:
+      - name: "body"
+        in: "body"
+        schema:
+          $ref: '#/definitions/Login'
+      responses:
+        200:
+          description: "成功時のレスポンス"
+          schema:
+            type: "object"
+            properties:
+              result:
+                type: "boolean"
+                format: "int64"
+              value:
+                type: "string"
+                example: ""
+        401:
+          description: "未認証のレスポンス"
+          
+  /rooms/exit/:
+    delete:
+      tags: 
+      - "rooms"
+      summary: "ゲームルームから退出"
+      description: "指定ゲームルームから退出処理を行う。"
+      parameters:
+      - name: "body"
+        in: "body"
+        schema:
+          $ref: '#/definitions/Room'
+      responses:
+        200:
+          description: "成功時のレスポンス"
+          schema:
+            type: "object"
+            properties:
+              result:
+                type: "boolean"
+                format: "int64"
+              value:
+                type: "string"
+                example: ""
+        401:
+          description: "未認証のレスポンス"
+          
+  /rooms/nextDay/:
+    put:
+      tags: 
+      - "rooms"
+      summary: "次の日に進める"
+      description: "指定ゲームルームの日づけを１日進める。"
+      parameters:
+      - name: "body"
+        in: "body"
+        schema:
+          $ref: '#/definitions/Room'
+      responses:
+        200:
+          description: "成功時のレスポンス"
+          schema:
+            type: "object"
+            properties:
+              result:
+                type: "boolean"
+                format: "int64"
+              value:
+                type: "string"
+                example: ""
+        401:
+          description: "未認証のレスポンス"
+          
+  /rooms/nextTime/:
+    put:
+      tags: 
+      - "rooms"
+      summary: "次の時間帯に進める"
+      description: "指定ゲームルームの時間帯を進める。昼の場合は夕方に、夕方の場合は夜にする"
+      parameters:
+      - name: "body"
+        in: "body"
+        schema:
+          $ref: '#/definitions/Room'
+      responses:
+        200:
+          description: "成功時のレスポンス"
+          schema:
+            type: "object"
+            properties:
+              result:
+                type: "boolean"
+                format: "int64"
+              value:
+                type: "string"
+                example: ""
+        401:
+          description: "未認証のレスポンス"
+
+definitions:
+
+  Job:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+        description: "Target user name"
+        example: "taro"
+      job:
+        type: "string"
+        description: "setting job name"
+        example: "Villagers"
+
+  Status:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+        description: "Target user name"
+        example: "taro"
+      status:
+        type: "string"
+        description: "Player Status"
+        enum:
+        - "ready"
+        - "standby"
+
+  User:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+        description: "Target user name"
+        example: "taro"
+
+  Login:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+        description: "Target user name"
+        example: "taro"
+      password:
+        type: "string"
+        description: "Target room password"
+        example: "roomPassword"
+      roomname:
+        type: "string"
+        description: "Target room name"
+        example: "room1"
         
+  Room:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+        description: "Target room name"
+        example: "room1"
