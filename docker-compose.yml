@@ -3,7 +3,6 @@ services:
 
   jinro:
     build: .
-    target: dev
     volumes: 
       - ./app:/var/www/html
     ports:
