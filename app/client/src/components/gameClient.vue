@@ -46,21 +46,22 @@ export default {
       );
     }
   },
-  created() {
+  beforeMount() {
     var res = this.sendActivity("category=me");
     res.then(data => {
       if (data.status == "401") {
-        fetch("login.html", { method: "GET" })
-          .then(res => {
-            return res;
-          })
-          .then(data => {
-            console.log(data);
-            var ele = document.getElementById("gameClient");
-            ele.innerHTML = data;
-          });
+        alert("このゲームはログインする必要があります。")
+        $.ajax({
+          url:'./login.html',
+          type:'GET',
+        })
+        .done((data) => {
+          $('#gameClient').html(data);
+        })
       }
     });
+  },
+  created() {
     es = new EventSource("Broadcast.php");
     let vue = this;
     es.onmessage = function(event) {
