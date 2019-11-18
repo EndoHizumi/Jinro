@@ -1,4 +1,6 @@
 <?php
+    ini_set('session.gc_probability', 1);
+    ini_set('session.gc_divisor', 1);
     session_name("jinroPlayerID");
     session_start();
     require("Common.php");
@@ -103,7 +105,8 @@
     }
 
     function quit()
-    {
+    {   
+        session_abort();
         return runQuery("UPDATE members SET Job=NULL,Ready= 0,vote= 0,expel= 0,Guard= 0,Event='quit' WHERE ID != 0");
     }
 
