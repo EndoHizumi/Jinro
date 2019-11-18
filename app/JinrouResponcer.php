@@ -1,4 +1,7 @@
 <?php
+
+function main()
+{
     session_name("jinroPlayerID");
     session_start();
     require("Common.php");
@@ -21,6 +24,7 @@
         echo $th;
         echo "false\n";
     }
+}
  
     function runQuery(string $statement, array $bindParamMap=[])
     {
@@ -176,3 +180,8 @@
             return "[101] Login Failure\n";
         }
     }
+
+// 直接呼び出されたときだけ、main関数を呼ぶ
+if (realpath($_SERVER["SCRIPT_FILENAME"]) == realpath(__FILE__)){
+    main();
+}
