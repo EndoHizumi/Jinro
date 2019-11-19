@@ -1,11 +1,11 @@
 <?php
+require("Common.php");
+require("Actorassign.php");
 
 function main()
 {
     session_name("jinroPlayerID");
     session_start();
-    require("Common.php");
-    require("Actorassign.php");
     $category = mb_strtolower(filter_input(INPUT_POST, "category", FILTER_SANITIZE_STRING), "UTF-8");
     if (empty($category)) {
         header("HTTP/1.1 404 Not Found");
