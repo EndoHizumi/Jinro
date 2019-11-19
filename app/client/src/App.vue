@@ -4,7 +4,7 @@
     </div>
 </template>
 
-<script>
+<script crossorigin>
 import gameClient from "./components/gameClient.vue";
 import reset from "reset.css"
 export default {
