@@ -19,7 +19,7 @@ $(document).ready(function () {
         }).done(function (data) {
             console.log(data);
             if (data.indexOf("000") != -1) {
-                // window.location.href = "gameroom.html";
+                window.location.href = "/index.html";
             } else {
                 $(".ErrArea").html(data);
             }
