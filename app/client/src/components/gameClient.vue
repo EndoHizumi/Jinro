@@ -31,7 +31,14 @@ export default {
       );
       return result;
     },
-    receiveEvent(message) {},
+    receiveEvent(message) {
+      if(message.Event == "Enter"){
+        name=message.Name
+        message.Message = `${name}さんが入室しました`
+        message.Name="GameMaster"
+        this.displayMessage(message);
+      }
+    },
     sendActivity(requestBody) {
       const method = "POST";
       const body = requestBody;
