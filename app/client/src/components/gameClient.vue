@@ -36,7 +36,8 @@ export default {
         name=message.Name
         message.Message = `${name}さんが入室しました`
         message.Name="GameMaster"
-        this.displayMessage(message);
+        this.displayMessage(message)
+        this.$refs.view.appendPlayer(name)
       }
     },
     sendActivity(requestBody) {

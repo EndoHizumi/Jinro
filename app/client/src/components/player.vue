@@ -8,6 +8,7 @@
 <script>
 export default {
   props: {
+    id: Number,
     name: String,
     icon: String
   },
@@ -41,6 +42,7 @@ export default {
   width: 64px;
   height: 64px;
   position: relative;
+  margin-left: 5px;
 }
 .player:hover {
   opacity: 0.7;
