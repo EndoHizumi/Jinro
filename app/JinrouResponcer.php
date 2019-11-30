@@ -111,7 +111,7 @@ function quit()
 {
     $_SESSION = array();
     session_destroy();
-    return runQuery("UPDATE members SET Job=NULL,Ready= 0,vote= 0,expel= 0,Guard= 0,Event='quit' WHERE ID != 0");
+    return runQuery("UPDATE members SET Job=NULL,Ready= 0,vote= 0,expel= 0,Guard= 0,Event='Quit' WHERE ID != 0");
 }
 
 function fin()
