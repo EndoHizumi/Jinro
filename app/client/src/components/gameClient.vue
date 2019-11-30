@@ -1,7 +1,7 @@
 <template>
   <div id="gameClient">
     <Header></Header>
-    <playersview></playersview>
+    <playersview ref="view" v-on:action="logout"></playersview>
     <Chat ref="chat" name="hizumi" v-on:submit="sendMessage" />
   </div>
 </template>
@@ -38,6 +38,11 @@ export default {
         message.Name="GameMaster"
         this.displayMessage(message)
         this.$refs.view.appendPlayer(name)
+      }else if (message.Event == "Quit") {
+        name=message.Name
+        message.Message = `${name}さんが退室しました`
+        message.Name="GameMaster"
+        this.displayMessage(message)
       }
     },
     sendActivity(requestBody) {
@@ -52,6 +57,13 @@ export default {
           return res;
         }
       );
+    },
+    logout(playerName) {
+      if(this.name == playerName){
+        if(window.confirm("ログアウトしますか？")){
+          this.sendActivity("category=quit");
+        }
+      }
     }
   },
   beforeMount() {

@@ -25,8 +25,7 @@ export default {
         this.players.push({id:this.id,name:playerName})
     },
     logout(event){
-        console.log(event.target.innerText)
-        this.$emit("submit", event.target.innerText);
+        this.$emit("action", event.target.innerText);
     }
   }
 };
