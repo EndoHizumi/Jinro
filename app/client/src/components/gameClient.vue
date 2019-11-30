@@ -1,8 +1,8 @@
 <template>
   <div id="gameClient">
     <Header></Header>
-    <playersview ref="view" v-on:action="logout"></playersview>
-    <Chat ref="chat" name="hizumi" v-on:submit="sendMessage" />
+    <playersview></playersview>
+    <Chat ref="chat" :name="name" v-on:submit="sendMessage" />
   </div>
 </template>
 
@@ -18,6 +18,11 @@ export default {
     Header,
     Playersview,
     Chat
+  },
+  data() {
+    return {
+      name: "player"
+    };
   },
   methods: {
     displayMessage(message) {
@@ -67,17 +72,22 @@ export default {
     }
   },
   beforeMount() {
+    var vue = this
     var res = this.sendActivity("category=me");
     res.then(data => {
       if (data.status == "401") {
-        alert("このゲームはログインする必要があります。")
+        $("#gameClient").html("");
+        alert("このゲームはログインする必要があります。");
         $.ajax({
-          url:'./login.html',
-          type:'GET',
-        })
-        .done((data) => {
-          $('#gameClient').html(data);
-        })
+          url: "./login.html",
+          type: "GET"
+        }).done(data => {
+          $("#gameClient").html(data);
+        });
+      } else {
+        data.text().then(function(text) {
+          vue.name =  text;
+        });
       }
     });
   },
@@ -86,7 +96,6 @@ export default {
     let vue = this;
     es.onmessage = function(event) {
       let jdata = JSON.parse(event.data);
-      console.log(jdata);
       if (jdata.Event == "message") {
         vue.displayMessage(jdata);
       } else {

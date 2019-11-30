@@ -9,13 +9,13 @@ function main()
     $category = mb_strtolower(filter_input(INPUT_POST, "category", FILTER_SANITIZE_STRING), "UTF-8");
     if (empty($category)) {
         header("HTTP/1.1 404 Not Found");
-        echo ("<h1> Not Found</h1>");
+        echo("<h1> Not Found</h1>");
         return;
     }
     try {
         if ($category != "enter" && empty($_SESSION['name'])) {
             header("HTTP/1.1 401 Unauthorized\n");
-            echo ("<h1> 401 Unauthorized</h1>");
+            echo("<h1> 401 Unauthorized</h1>");
             return;
         }
         $result = $category();
@@ -39,7 +39,7 @@ function runQuery(string $statement, array $bindParamMap = [])
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $query = $pdo->prepare($statement);
     foreach ($bindParamMap as $key => $value) {
-        $query->bindParam($key, $value);
+        $query->bindValue($key, $value);
     }
     try {
         $execResult = $query->execute();
@@ -187,6 +187,6 @@ function enter()
 }
 
 // 直接呼び出されたときだけ、main関数を呼ぶ
-if (realpath($_SERVER["SCRIPT_FILENAME"]) == realpath(__FILE__)){
+if (realpath($_SERVER["SCRIPT_FILENAME"]) == realpath(__FILE__)) {
     main();
 }
