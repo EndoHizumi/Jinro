@@ -37,11 +37,17 @@ export default {
       return result;
     },
     receiveEvent(message) {
-      if (message.Event == "Enter") {
-        name = message.Name;
-        message.Message = `${name}さんが入室しました`;
-        message.Name = "GameMaster";
-        this.displayMessage(message);
+      if(message.Event == "Enter"){
+        name=message.Name
+        message.Message = `${name}さんが入室しました`
+        message.Name="GameMaster"
+        this.displayMessage(message)
+        this.$refs.view.appendPlayer(name)
+      }else if (message.Event == "Quit") {
+        name=message.Name
+        message.Message = `${name}さんが退室しました`
+        message.Name="GameMaster"
+        this.displayMessage(message)
       }
     },
     sendActivity(requestBody) {
@@ -56,6 +62,13 @@ export default {
           return res;
         }
       );
+    },
+    logout(playerName) {
+      if(this.name == playerName){
+        if(window.confirm("ログアウトしますか？")){
+          this.sendActivity("category=quit");
+        }
+      }
     }
   },
   beforeMount() {
