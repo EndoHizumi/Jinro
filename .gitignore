@@ -57,3 +57,9 @@ Temporary Items
 app/hanger/FAlistTempletehtml.phpdecode.php
 .history
 mysql_data
+node_modules
+dist
+out
+css/
+js/
+index.html

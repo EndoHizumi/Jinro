@@ -13,7 +13,7 @@ class ExceptionMapping{
     // 渡されたＳＱＬエラーメッセージから、エラーコードを取り出して、
     // 対応するメッセージを表示する
     $exceptionCode= substr($this -> ExceptionMsg,9,5);
-    echo($this -> code2String[$exceptionCode]);
+    return ($this -> code2String[$exceptionCode]);
   }
 
 }
