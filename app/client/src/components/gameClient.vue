@@ -1,7 +1,7 @@
 <template>
   <div id="gameClient">
     <Header></Header>
-    <playersview></playersview>
+    <playersview ref="view" v-on:action="logout"></playersview>
     <Chat ref="chat" :name="name" v-on:submit="sendMessage" />
   </div>
 </template>
@@ -67,6 +67,7 @@ export default {
       if(this.name == playerName){
         if(window.confirm("ログアウトしますか？")){
           this.sendActivity("category=quit");
+          this.$refs.view.removePlayer(playerName);
         }
       }
     }
