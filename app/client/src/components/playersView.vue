@@ -1,8 +1,8 @@
 <template>
   <div class="playersview">
-    <ul id="playerslist">
-      <li id="playerslist__item" v-for="player in players" :key="player.id" v-on:click="logout">
-        <player class="playericon" :id="player.id" :name="player.name"></player>
+    <ul id="playerslist" v-for="player in players" v-on:click="logout">
+      <li id="playerslist__item" v-for="playerinfo in player">
+        <player class="playericon" :id="playerinfo.id" :name="playerinfo.name"></player>
       </li>
     </ul>
   </div>
@@ -16,13 +16,16 @@ export default {
   data() {
     return {
       id: 1,
-      players: []
+      players: [],
     };
   },
   methods: {
     appendPlayer(playerName) {
         this.id += 1 
-        this.players.push({id:this.id,name:playerName})
+        this.players.push({[playerName]: {id:this.id,name:playerName}})
+    },
+    removePlayer(playerName) {
+        this.$delete(this.players[0],playerName)
     },
     logout(event){
         this.$emit("action", event.target.innerText);
@@ -31,7 +34,7 @@ export default {
 };
 </script>
 <style>
-#playerslist__item {
+#playerslist {
   display: inline-block;
 }
 
