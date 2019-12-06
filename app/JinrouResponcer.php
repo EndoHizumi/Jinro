@@ -109,7 +109,6 @@ function nextDay()
 
 function quit()
 {
-    runQuery("UPDATE members SET Event='Quit' WHERE Name=:name");
     runQuery("DELETE FROM members WHERE Name=:name");
     $_SESSION = array();
     session_destroy();
