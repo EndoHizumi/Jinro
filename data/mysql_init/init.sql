@@ -51,4 +51,4 @@ CREATE TRIGGER updateMember AFTER UPDATE ON members FOR EACH ROW insert into act
 
 CREATE TRIGGER insertMember AFTER INSERT ON members FOR EACH ROW insert into activity_logs(name,event,time) value(new.name,new.event,Now());
 
-CREATE TRIGGER deleteMember BEFORE DELETE ON members FOR EACH ROW insert into activity_logs (name,event,time) value(old.name,old.event,Now());
+CREATE TRIGGER deleteMember BEFORE DELETE ON members FOR EACH ROW insert into activity_logs (name,event,time) value(old.name,"Quit",Now());
