@@ -1,7 +1,7 @@
 <template>
   <div id="gameClient">
     <Header></Header>
-    <playersview></playersview>
+    <playersview ref="view" v-on:action="logout"></playersview>
     <Chat ref="chat" :name="name" v-on:submit="sendMessage" />
   </div>
 </template>
@@ -40,8 +40,15 @@ export default {
       if (message.Event == "Enter") {
         name = message.Name;
         message.Message = `${name}さんが入室しました`;
-        message.Name = "GameMaster";
+        message.Name = "system";
         this.displayMessage(message);
+        this.$refs.view.appendPlayer(name);
+      } else if (message.Event == "Quit") {
+        name = message.Name;
+        message.Message = `${name}さんが退室しました`;
+        message.Name = "system";
+        this.displayMessage(message);
+        this.$refs.view.removePlayer(name);
       }
     },
     sendActivity(requestBody) {
@@ -56,10 +63,26 @@ export default {
           return res;
         }
       );
+    },
+    logout(playerName) {
+      if (this.name == playerName) {
+        if (window.confirm("ログアウトしますか？")) {
+          this.sendActivity("category=quit").then(res => {
+              if (res.ok == true) {
+                $.ajax({
+                  url: "./login.html",
+                  type: "GET"
+                }).done(data => {
+                  $("#gameClient").html(data);
+                });
+              }
+            });
+        }
+      }
     }
   },
   beforeMount() {
-    var vue = this
+    var vue = this;
     var res = this.sendActivity("category=me");
     res.then(data => {
       if (data.status == "401") {
@@ -73,7 +96,7 @@ export default {
         });
       } else {
         data.text().then(function(text) {
-          vue.name =  text;
+          vue.name = text;
         });
       }
     });

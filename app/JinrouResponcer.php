@@ -109,9 +109,9 @@ function nextDay()
 
 function quit()
 {
+    runQuery("DELETE FROM members WHERE Name=:name");
     $_SESSION = array();
     session_destroy();
-    return runQuery("UPDATE members SET Job=NULL,Ready= 0,vote= 0,expel= 0,Guard= 0,Event='quit' WHERE ID != 0");
 }
 
 function fin()
